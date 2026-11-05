@@ -4,7 +4,8 @@
   "outputDirectory": "public",
   "functions": {
     "api/index.php": {
-      "runtime": "vercel-php@0.8.0"
+      "runtime": "vercel-php@0.8.0",
+      "maxDuration": 30
     }
   },
   "routes": [
@@ -27,13 +28,16 @@
   ],
   "env": {
     "APP_ENV": "production",
+    "APP_DEBUG": "true",
+    "APP_KEY": "base64:exCIFga/9m8UJ6b1G/WqKB59R/kIguIdaRYNS0B7TTk=",
     "APP_CONFIG_CACHE": "/tmp/config.php",
     "APP_EVENTS_CACHE": "/tmp/events.php",
     "APP_PACKAGES_CACHE": "/tmp/packages.php",
     "APP_ROUTES_CACHE": "/tmp/routes.php",
     "APP_SERVICES_CACHE": "/tmp/services.php",
-    "VIEW_COMPILED_PATH": "/tmp",
+    "VIEW_COMPILED_PATH": "/tmp/storage/framework/views",
     "CACHE_STORE": "array",
+    "CACHE_DRIVER": "array",
     "SESSION_DRIVER": "cookie",
     "LOG_CHANNEL": "stderr"
   }

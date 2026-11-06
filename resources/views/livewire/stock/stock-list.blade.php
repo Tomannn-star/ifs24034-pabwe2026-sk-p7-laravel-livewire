@@ -117,7 +117,7 @@
     </div>
 
     <!-- Stock List Container -->
-    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+    <div class="bg-white rounded-2xl shadow-sm border border-slate-200">
         @if ($stocks->isEmpty())
             <div class="py-16 text-center">
                 <svg class="w-12 h-12 text-slate-300 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -129,7 +129,7 @@
         @else
             <ul class="divide-y divide-slate-100">
                 @foreach ($stocks as $stock)
-                    <li wire:key="stock-{{ $stock->id }}" class="p-4 sm:p-5 hover:bg-slate-50/75 transition flex items-start justify-between gap-4">
+                    <li wire:key="stock-{{ $stock->id }}" class="p-4 sm:p-5 hover:bg-slate-50/75 transition flex items-start justify-between gap-4 first:rounded-t-2xl last:rounded-b-2xl">
                         <div class="flex items-start space-x-3.5 flex-1 min-w-0">
                             <!-- Quantity Adjuster (+/-) -->
                             <div class="flex flex-col items-center bg-slate-100 rounded-lg p-1 border border-slate-200 flex-shrink-0">
@@ -195,7 +195,7 @@
                                 x-transition:leave="transition ease-in duration-75"
                                 x-transition:leave-start="opacity-100 scale-100"
                                 x-transition:leave-end="opacity-0 scale-95"
-                                class="absolute right-0 z-20 mt-1.5 w-48 origin-top-right rounded-xl border border-slate-200 bg-white py-1.5 shadow-xl shadow-slate-200/70">
+                                class="absolute right-0 z-50 mt-1.5 w-48 origin-top-right rounded-xl border border-slate-200 bg-white py-1.5 shadow-xl shadow-slate-200/70">
                                 <div class="px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-400">Tindakan</div>
 
                                 <a href="{{ route('stocks.show', $stock->id) }}" @click="open = false"

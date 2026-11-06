@@ -30,10 +30,12 @@ foreach ($storageDirs as $dir) {
 }
 
 // Database handling on Vercel:
-// If DB_HOST is localhost/127.0.0.1 or empty (local MariaDB cannot be reached from cloud),
-// use SQLite in /tmp/database.sqlite
+// Check if an external remote database (e.g. Supabase / Neon PostgreSQL, TiDB / Aiven MySQL) is configured
 $dbHost = getenv('DB_HOST');
-if (empty($dbHost) || $dbHost === '127.0.0.1' || $dbHost === 'localhost') {
+$dbUrl = getenv('DATABASE_URL') ?: getenv('DB_URL');
+$hasRemoteDb = (!empty($dbHost) && $dbHost !== '127.0.0.1' && $dbHost !== 'localhost') || !empty($dbUrl);
+
+if (!$hasRemoteDb) {
     $tmpDb = '/tmp/database.sqlite';
     $seedDb = __DIR__ . '/../database/database.sqlite';
 
@@ -60,19 +62,17 @@ require __DIR__ . '/../vendor/autoload.php';
 /** @var \Illuminate\Foundation\Application $app */
 $app = require_once __DIR__ . '/../bootstrap/app.php';
 
-// If running sqlite and users table is somehow missing, migrate & seed automatically
-if (getenv('DB_CONNECTION') === 'sqlite') {
-    try {
-        $kernel = $app->make(\Illuminate\Contracts\Console\Kernel::class);
-        $kernel->bootstrap();
+// Auto-run migrations and seeds if users table is missing on the current database
+try {
+    $kernel = $app->make(\Illuminate\Contracts\Console\Kernel::class);
+    $kernel->bootstrap();
 
-        if (!Schema::hasTable('users')) {
-            Artisan::call('migrate', ['--force' => true]);
-            Artisan::call('db:seed', ['--force' => true]);
-        }
-    } catch (\Throwable $e) {
-        // Log or silently continue
+    if (!Schema::hasTable('users')) {
+        Artisan::call('migrate', ['--force' => true]);
+        Artisan::call('db:seed', ['--force' => true]);
     }
+} catch (\Throwable $e) {
+    // Log or silently continue
 }
 
 // Handle request

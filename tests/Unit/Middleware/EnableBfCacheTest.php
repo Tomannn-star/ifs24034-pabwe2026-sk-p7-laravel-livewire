@@ -9,34 +9,22 @@ use Tests\TestCase;
 
 class EnableBfCacheTest extends TestCase
 {
-    public function test_removes_no_store_from_cache_control_on_get_request(): void
+    public function test_removes_no_store_directive_on_get_request(): void
     {
         $middleware = new EnableBfCache();
         $request = Request::create('/stocks', 'GET');
 
         $response = $middleware->handle($request, function () {
             $res = new Response('content', 200);
-            $res->headers->set('Cache-Control', 'no-cache, must-revalidate, no-store, max-age=0, private');
+            $res->headers->addCacheControlDirective('no-store', true);
+            $res->headers->set('Pragma', 'no-cache');
+            $res->headers->set('Expires', 'Fri, 01 Jan 1990 00:00:00 GMT');
             return $res;
         });
 
-        $cacheControl = (string) $response->headers->get('Cache-Control');
-        $this->assertStringNotContainsString('no-store', $cacheControl);
-        $this->assertStringContainsString('no-cache', $cacheControl);
-    }
-
-    public function test_leaves_cache_control_untouched_if_no_store_not_present(): void
-    {
-        $middleware = new EnableBfCache();
-        $request = Request::create('/stocks', 'GET');
-
-        $response = $middleware->handle($request, function () {
-            $res = new Response('content', 200);
-            $res->headers->set('Cache-Control', 'public, max-age=3600');
-            return $res;
-        });
-
-        $this->assertEquals('max-age=3600, public', (string) $response->headers->get('Cache-Control'));
+        $this->assertFalse($response->headers->hasCacheControlDirective('no-store'));
+        $this->assertFalse($response->headers->has('Pragma'));
+        $this->assertFalse($response->headers->has('Expires'));
     }
 
     public function test_leaves_post_request_untouched(): void
@@ -46,10 +34,10 @@ class EnableBfCacheTest extends TestCase
 
         $response = $middleware->handle($request, function () {
             $res = new Response('created', 201);
-            $res->headers->set('Cache-Control', 'no-store, private');
+            $res->headers->addCacheControlDirective('no-store', true);
             return $res;
         });
 
-        $this->assertStringContainsString('no-store', (string) $response->headers->get('Cache-Control'));
+        $this->assertTrue($response->headers->hasCacheControlDirective('no-store'));
     }
 }

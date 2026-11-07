@@ -15,12 +15,10 @@ class EnableBfCache
     {
         $response = $next($request);
 
-        if ($request->isMethod('GET') && $response->headers->has('Cache-Control')) {
-            $cacheControl = (string) $response->headers->get('Cache-Control');
-            if (str_contains($cacheControl, 'no-store')) {
-                $cleaned = trim(str_replace(['no-store,', ', no-store', 'no-store'], '', $cacheControl));
-                $response->headers->set('Cache-Control', $cleaned);
-            }
+        if ($request->isMethod('GET')) {
+            $response->headers->removeCacheControlDirective('no-store');
+            $response->headers->remove('Pragma');
+            $response->headers->remove('Expires');
         }
 
         return $response;

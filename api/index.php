@@ -114,9 +114,9 @@ $kernel = $app->make(\Illuminate\Contracts\Http\Kernel::class);
 $response = $kernel->handle($request);
 
 if ($request->isMethod('GET')) {
+    $response->headers->removeCacheControlDirective('no-store');
     $response->headers->remove('Pragma');
     $response->headers->remove('Expires');
-    $response->headers->set('Cache-Control', 'no-cache, must-revalidate, max-age=0, private');
 }
 
 $response->send();

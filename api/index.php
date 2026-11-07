@@ -31,11 +31,23 @@ foreach ($storageDirs as $dir) {
 
 // Database handling on Vercel:
 // Check if an external remote database (e.g. Supabase / Neon PostgreSQL, TiDB / Aiven MySQL) is configured
-$dbHost = getenv('DB_HOST');
-$dbUrl = getenv('DATABASE_URL') ?: getenv('DB_URL');
+$dbHost = getenv('DB_HOST') ?: ($_ENV['DB_HOST'] ?? ($_SERVER['DB_HOST'] ?? ''));
+$dbPort = getenv('DB_PORT') ?: ($_ENV['DB_PORT'] ?? ($_SERVER['DB_PORT'] ?? ''));
+$dbConn = getenv('DB_CONNECTION') ?: ($_ENV['DB_CONNECTION'] ?? ($_SERVER['DB_CONNECTION'] ?? ''));
+$dbUrl = getenv('DATABASE_URL') ?: (getenv('DB_URL') ?: ($_ENV['DATABASE_URL'] ?? ($_ENV['DB_URL'] ?? ($_SERVER['DATABASE_URL'] ?? ($_SERVER['DB_URL'] ?? '')))));
+
 $hasRemoteDb = (!empty($dbHost) && $dbHost !== '127.0.0.1' && $dbHost !== 'localhost') || !empty($dbUrl);
 
-if (!$hasRemoteDb) {
+if ($hasRemoteDb) {
+    // If connecting to Supabase / PostgreSQL host or port, ensure DB_CONNECTION is pgsql
+    if (empty($dbConn) || $dbConn === 'sqlite') {
+        if ($dbPort === '5432' || $dbPort === '6543' || str_contains($dbHost, 'supabase') || str_contains($dbHost, 'pooler') || str_contains($dbHost, 'neon') || str_starts_with($dbUrl, 'postgres')) {
+            putenv("DB_CONNECTION=pgsql");
+            $_ENV['DB_CONNECTION'] = 'pgsql';
+            $_SERVER['DB_CONNECTION'] = 'pgsql';
+        }
+    }
+} else {
     $tmpDb = '/tmp/database.sqlite';
     $seedDb = __DIR__ . '/../database/database.sqlite';
 

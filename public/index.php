@@ -24,7 +24,6 @@ if ($request->isMethod('GET')) {
     $response->headers->removeCacheControlDirective('no-store');
     $response->headers->remove('Pragma');
     $response->headers->remove('Expires');
-    $response->headers->set('X-Delcom-Debug', 'running-public-index');
 }
 
 $response->send();

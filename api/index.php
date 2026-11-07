@@ -109,4 +109,18 @@ try {
 }
 
 // Handle request
-$app->handleRequest(Request::capture());
+$request = Request::capture();
+$kernel = $app->make(\Illuminate\Contracts\Http\Kernel::class);
+$response = $kernel->handle($request);
+
+if ($request->isMethod('GET') && $response->headers->has('Cache-Control')) {
+    $cc = (string) $response->headers->get('Cache-Control');
+    if (str_contains($cc, 'no-store')) {
+        $cc = preg_replace('/,?\s*no-store\s*,?/', ', ', $cc);
+        $cc = trim($cc, ', ');
+        $response->headers->set('Cache-Control', $cc);
+    }
+}
+
+$response->send();
+$kernel->terminate($request, $response);

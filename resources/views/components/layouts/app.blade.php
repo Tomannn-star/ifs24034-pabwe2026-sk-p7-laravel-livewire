@@ -6,7 +6,7 @@
     <meta name="description" content="Aplikasi Manajemen Inventaris dan Stok Barang Praktikum Pemrograman Aplikasi Berbasis Web dan Mobile 2026.">
     <title>{{ $title ?? 'Stock Barang' }} - PABWE 2026</title>
     <link rel="icon" type="image/svg+xml" href="{{ asset('favicon.svg') }}">
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite(['resources/css/app.css'])
     <style>
         [x-cloak] { display: none !important; }
         html:has(.modal-scroll-lock),

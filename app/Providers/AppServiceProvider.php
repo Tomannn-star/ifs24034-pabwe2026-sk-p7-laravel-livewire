@@ -48,5 +48,11 @@ class AppServiceProvider extends ServiceProvider
         RateLimiter::for('api', function (Request $request) {
             return Limit::perSecond(1000)->by($request->user()?->id ?: $request->ip());
         });
+
+        if (class_exists(\Livewire\Livewire::class)) {
+            \Livewire\Livewire::useScriptTagAttributes([
+                'type' => 'module',
+            ]);
+        }
     }
 }

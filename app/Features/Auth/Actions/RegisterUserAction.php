@@ -15,9 +15,9 @@ class RegisterUserAction
     public function execute(array $data): User
     {
         return User::create([
-            'name' => $data['name'],
-            'username' => $data['username'],
-            'email' => $data['email'],
+            'name' => trim((string) $data['name']),
+            'username' => trim((string) $data['username']),
+            'email' => strtolower(trim((string) $data['email'])),
             'password' => Hash::make($data['password']),
             'role' => $data['role'] ?? 'member',
         ]);

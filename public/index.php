@@ -17,4 +17,15 @@ require __DIR__.'/../vendor/autoload.php';
 /** @var Application $app */
 $app = require_once __DIR__.'/../bootstrap/app.php';
 
-$app->handleRequest(Request::capture());
+$request = Request::capture();
+$response = $app->handleRequest($request);
+
+if ($request->isMethod('GET')) {
+    $response->headers->removeCacheControlDirective('no-store');
+    $response->headers->remove('Pragma');
+    $response->headers->remove('Expires');
+    $response->headers->set('X-Delcom-Debug', 'running-public-index');
+}
+
+$response->send();
+$app->terminate();

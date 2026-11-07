@@ -12,9 +12,7 @@ $app = Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        $middleware->web(append: [
-            \App\Http\Middleware\EnableBfCache::class,
-        ]);
+        $middleware->prepend(\App\Http\Middleware\EnableBfCache::class);
         $middleware->alias([
             'role' => \App\Http\Middleware\EnsureRole::class,
             'owns.stock' => \App\Http\Middleware\EnsureStockOwnership::class,

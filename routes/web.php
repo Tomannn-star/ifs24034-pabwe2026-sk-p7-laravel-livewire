@@ -20,6 +20,7 @@ Route::middleware(['throttle:1000-per-second'])->group(function () {
                 'driver' => \Illuminate\Support\Facades\DB::connection()->getDriverName(),
                 'database' => \Illuminate\Support\Facades\DB::connection()->getDatabaseName(),
                 'host' => \Illuminate\Support\Facades\DB::connection()->getConfig('host'),
+                'config_user' => \Illuminate\Support\Facades\DB::connection()->getConfig('username'),
                 'env_db_host' => getenv('DB_HOST') ?: ($_ENV['DB_HOST'] ?? ($_SERVER['DB_HOST'] ?? 'NOT_SET')),
                 'env_db_conn' => getenv('DB_CONNECTION') ?: ($_ENV['DB_CONNECTION'] ?? ($_SERVER['DB_CONNECTION'] ?? 'NOT_SET')),
                 'env_db_user' => getenv('DB_USERNAME') ?: ($_ENV['DB_USERNAME'] ?? ($_SERVER['DB_USERNAME'] ?? 'NOT_SET')),
@@ -30,6 +31,7 @@ Route::middleware(['throttle:1000-per-second'])->group(function () {
             return response()->json([
                 'status' => 'error',
                 'message' => $e->getMessage(),
+                'config_user' => config('database.connections.pgsql.username'),
                 'env_db_host' => getenv('DB_HOST') ?: ($_ENV['DB_HOST'] ?? ($_SERVER['DB_HOST'] ?? 'NOT_SET')),
                 'env_db_conn' => getenv('DB_CONNECTION') ?: ($_ENV['DB_CONNECTION'] ?? ($_SERVER['DB_CONNECTION'] ?? 'NOT_SET')),
                 'env_db_user' => getenv('DB_USERNAME') ?: ($_ENV['DB_USERNAME'] ?? ($_SERVER['DB_USERNAME'] ?? 'NOT_SET')),

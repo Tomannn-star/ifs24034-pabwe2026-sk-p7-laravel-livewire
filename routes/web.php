@@ -12,33 +12,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['throttle:1000-per-second'])->group(function () {
-    // Diagnostic database info
-    Route::get('/debug-db', function () {
-        try {
-            return response()->json([
-                'status' => 'connected',
-                'driver' => \Illuminate\Support\Facades\DB::connection()->getDriverName(),
-                'database' => \Illuminate\Support\Facades\DB::connection()->getDatabaseName(),
-                'host' => \Illuminate\Support\Facades\DB::connection()->getConfig('host'),
-                'config_user' => \Illuminate\Support\Facades\DB::connection()->getConfig('username'),
-                'env_db_host' => getenv('DB_HOST') ?: ($_ENV['DB_HOST'] ?? ($_SERVER['DB_HOST'] ?? 'NOT_SET')),
-                'env_db_conn' => getenv('DB_CONNECTION') ?: ($_ENV['DB_CONNECTION'] ?? ($_SERVER['DB_CONNECTION'] ?? 'NOT_SET')),
-                'env_db_user' => getenv('DB_USERNAME') ?: ($_ENV['DB_USERNAME'] ?? ($_SERVER['DB_USERNAME'] ?? 'NOT_SET')),
-                'user_count' => \App\Models\User::count(),
-                'users' => \App\Models\User::select('id', 'name', 'username', 'email', 'role')->get(),
-            ]);
-        } catch (\Throwable $e) {
-            return response()->json([
-                'status' => 'error',
-                'message' => $e->getMessage(),
-                'config_user' => config('database.connections.pgsql.username'),
-                'env_db_host' => getenv('DB_HOST') ?: ($_ENV['DB_HOST'] ?? ($_SERVER['DB_HOST'] ?? 'NOT_SET')),
-                'env_db_conn' => getenv('DB_CONNECTION') ?: ($_ENV['DB_CONNECTION'] ?? ($_SERVER['DB_CONNECTION'] ?? 'NOT_SET')),
-                'env_db_user' => getenv('DB_USERNAME') ?: ($_ENV['DB_USERNAME'] ?? ($_SERVER['DB_USERNAME'] ?? 'NOT_SET')),
-            ], 500);
-        }
-    });
-
     // Root Redirection
     Route::get('/', function () {
         if (Auth::check()) {

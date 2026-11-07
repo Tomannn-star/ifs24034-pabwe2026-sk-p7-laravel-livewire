@@ -1,8 +1,8 @@
 <div class="max-w-md mx-auto my-8">
     <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200">
         <div class="text-center mb-6">
-            <h2 class="text-2xl font-bold text-slate-900">Masuk ke Akun Anda</h2>
-            <p class="text-sm text-slate-500 mt-1">Kelola inventaris dan stok barang secara teratur dan efisien</p>
+            <h1 class="text-2xl font-bold text-slate-900">Masuk ke Akun Anda</h1>
+            <p class="text-sm text-slate-600 mt-1">Kelola inventaris dan stok barang secara teratur dan efisien</p>
         </div>
 
         <form wire:submit.prevent="authenticate" class="space-y-5">

@@ -48,8 +48,8 @@
             </button>
 
             <!-- Delete Button -->
-            <button wire:click="confirmDeleteStock" wire:loading.attr="disabled" class="inline-flex items-center space-x-1 px-3 py-2 bg-rose-50 hover:bg-rose-100 text-rose-600 border border-rose-200 text-xs font-semibold rounded-lg transition disabled:opacity-75">
-                <svg class="w-4 h-4 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <button wire:click="confirmDeleteStock" wire:loading.attr="disabled" class="inline-flex items-center space-x-1 px-3 py-2 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 text-xs font-semibold rounded-lg transition disabled:opacity-75">
+                <svg class="w-4 h-4 text-rose-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                 </svg>
                 <span>Hapus</span>
@@ -83,8 +83,8 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>
                 </div>
-                <h3 class="text-sm font-bold text-slate-800">Tambahkan Gambar Produk / Barang</h3>
-                <p class="text-xs text-slate-400 mt-1 max-w-sm">Mendukung format gambar PNG, JPG, GIF hingga ukuran 5MB untuk katalog barang.</p>
+                <h2 class="text-sm font-bold text-slate-800">Tambahkan Gambar Produk / Barang</h2>
+                <p class="text-xs text-slate-600 mt-1 max-w-sm">Mendukung format gambar PNG, JPG, GIF hingga ukuran 5MB untuk katalog barang.</p>
                 
                 <button type="button" onclick="document.getElementById('coverPhotoInput').click()" class="mt-4 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-xl shadow-sm transition flex items-center space-x-1.5">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
@@ -106,28 +106,28 @@
     <!-- Metadata Overview Cards -->
     <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
         <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200">
-            <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider block mb-1">Jumlah Stok</span>
+            <span class="text-xs font-semibold text-slate-600 uppercase tracking-wider block mb-1">Jumlah Stok</span>
             <div class="text-2xl font-black text-slate-900">
-                {{ $stock->quantity }} <span class="text-sm font-medium text-slate-500">{{ $stock->unit ?? 'pcs' }}</span>
+                {{ $stock->quantity }} <span class="text-sm font-medium text-slate-600">{{ $stock->unit ?? 'pcs' }}</span>
             </div>
         </div>
 
         <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200">
-            <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider block mb-1">Ambang Min. Stok</span>
+            <span class="text-xs font-semibold text-slate-600 uppercase tracking-wider block mb-1">Ambang Min. Stok</span>
             <div class="text-2xl font-black text-slate-900">
-                {{ $stock->min_stock }} <span class="text-sm font-medium text-slate-500">{{ $stock->unit ?? 'pcs' }}</span>
+                {{ $stock->min_stock }} <span class="text-sm font-medium text-slate-600">{{ $stock->unit ?? 'pcs' }}</span>
             </div>
         </div>
 
         <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200">
-            <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider block mb-1">Harga Satuan</span>
+            <span class="text-xs font-semibold text-slate-600 uppercase tracking-wider block mb-1">Harga Satuan</span>
             <div class="text-xl font-bold text-emerald-700 mt-1">
                 {{ $stock->price !== null ? 'Rp ' . number_format((float) $stock->price, 0, ',', '.') : '-' }}
             </div>
         </div>
 
         <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200">
-            <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider block mb-1">Status Ketersediaan</span>
+            <span class="text-xs font-semibold text-slate-600 uppercase tracking-wider block mb-1">Status Ketersediaan</span>
             <div class="mt-1">
                 <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold border {{ $stock->status instanceof \App\Features\Stock\Enums\StockStatus ? $stock->status->badgeClass() : 'bg-slate-100 text-slate-700' }}">
                     {{ $stock->status instanceof \App\Features\Stock\Enums\StockStatus ? $stock->status->label() : ucfirst((string) $stock->status) }}
@@ -189,65 +189,65 @@
 
                 <form wire:submit.prevent="saveStock" class="space-y-4">
                     <div>
-                        <label class="block text-sm font-medium text-slate-700 mb-1">Nama Barang <span class="text-rose-500">*</span></label>
-                        <input wire:model="name" type="text"
+                        <label for="editStockName" class="block text-sm font-medium text-slate-700 mb-1">Nama Barang <span class="text-rose-500">*</span></label>
+                        <input wire:model="name" type="text" id="editStockName" aria-label="Nama Barang"
                             class="w-full px-3.5 py-2 text-sm rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                        @error('name') <span class="text-xs text-rose-600 mt-1 block">{{ $message }}</span> @enderror
+                        @error('name') <span class="text-xs text-rose-700 mt-1 block">{{ $message }}</span> @enderror
                     </div>
 
                     <div class="grid grid-cols-2 gap-3">
                         <div>
-                            <label class="block text-sm font-medium text-slate-700 mb-1">SKU</label>
-                            <input wire:model="sku" type="text"
+                            <label for="editStockSku" class="block text-sm font-medium text-slate-700 mb-1">SKU</label>
+                            <input wire:model="sku" type="text" id="editStockSku" aria-label="SKU"
                                 class="w-full px-3.5 py-2 text-sm rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                            @error('sku') <span class="text-xs text-rose-600 mt-1 block">{{ $message }}</span> @enderror
+                            @error('sku') <span class="text-xs text-rose-700 mt-1 block">{{ $message }}</span> @enderror
                         </div>
 
                         <div>
-                            <label class="block text-sm font-medium text-slate-700 mb-1">Satuan <span class="text-rose-500">*</span></label>
-                            <input wire:model="unit" type="text"
+                            <label for="editStockUnit" class="block text-sm font-medium text-slate-700 mb-1">Satuan <span class="text-rose-500">*</span></label>
+                            <input wire:model="unit" type="text" id="editStockUnit" aria-label="Satuan"
                                 class="w-full px-3.5 py-2 text-sm rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                            @error('unit') <span class="text-xs text-rose-600 mt-1 block">{{ $message }}</span> @enderror
+                            @error('unit') <span class="text-xs text-rose-700 mt-1 block">{{ $message }}</span> @enderror
                         </div>
                     </div>
 
                     <div class="grid grid-cols-3 gap-3">
                         <div>
-                            <label class="block text-sm font-medium text-slate-700 mb-1">Jumlah <span class="text-rose-500">*</span></label>
-                            <input wire:model="quantity" type="number" min="0"
+                            <label for="editStockQuantity" class="block text-sm font-medium text-slate-700 mb-1">Jumlah <span class="text-rose-500">*</span></label>
+                            <input wire:model="quantity" type="number" min="0" id="editStockQuantity" aria-label="Jumlah"
                                 class="w-full px-3.5 py-2 text-sm rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                            @error('quantity') <span class="text-xs text-rose-600 mt-1 block">{{ $message }}</span> @enderror
+                            @error('quantity') <span class="text-xs text-rose-700 mt-1 block">{{ $message }}</span> @enderror
                         </div>
 
                         <div>
-                            <label class="block text-sm font-medium text-slate-700 mb-1">Min. Stok <span class="text-rose-500">*</span></label>
-                            <input wire:model="minStock" type="number" min="0"
+                            <label for="editStockMinStock" class="block text-sm font-medium text-slate-700 mb-1">Min. Stok <span class="text-rose-500">*</span></label>
+                            <input wire:model="minStock" type="number" min="0" id="editStockMinStock" aria-label="Min. Stok"
                                 class="w-full px-3.5 py-2 text-sm rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                            @error('minStock') <span class="text-xs text-rose-600 mt-1 block">{{ $message }}</span> @enderror
+                            @error('minStock') <span class="text-xs text-rose-700 mt-1 block">{{ $message }}</span> @enderror
                         </div>
 
                         <div>
-                            <label class="block text-sm font-medium text-slate-700 mb-1">Harga (Rp)</label>
-                            <input wire:model="price" type="number" min="0" step="any"
+                            <label for="editStockPrice" class="block text-sm font-medium text-slate-700 mb-1">Harga (Rp)</label>
+                            <input wire:model="price" type="number" min="0" step="any" id="editStockPrice" aria-label="Harga (Rp)"
                                 class="w-full px-3.5 py-2 text-sm rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                            @error('price') <span class="text-xs text-rose-600 mt-1 block">{{ $message }}</span> @enderror
+                            @error('price') <span class="text-xs text-rose-700 mt-1 block">{{ $message }}</span> @enderror
                         </div>
                     </div>
 
                     <div>
-                        <label class="block text-sm font-medium text-slate-700 mb-1">Status Ketersediaan <span class="text-rose-500">*</span></label>
-                        <select wire:model="status"
+                        <label for="editStockStatus" class="block text-sm font-medium text-slate-700 mb-1">Status Ketersediaan <span class="text-rose-500">*</span></label>
+                        <select wire:model="status" id="editStockStatus" aria-label="Status Ketersediaan"
                             class="w-full px-3.5 py-2 text-sm rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white">
                             @foreach ($statuses as $st)
                                 <option value="{{ $st->value }}">{{ $st->label() }}</option>
                             @endforeach
                         </select>
-                        @error('status') <span class="text-xs text-rose-600 mt-1 block">{{ $message }}</span> @enderror
+                        @error('status') <span class="text-xs text-rose-700 mt-1 block">{{ $message }}</span> @enderror
                     </div>
 
                     <div>
-                        <label class="block text-sm font-medium text-slate-700 mb-1">Deskripsi / Spesifikasi</label>
-                        <textarea wire:model="description" rows="4"
+                        <label for="editStockDescription" class="block text-sm font-medium text-slate-700 mb-1">Deskripsi / Spesifikasi</label>
+                        <textarea wire:model="description" id="editStockDescription" aria-label="Deskripsi / Spesifikasi" rows="4"
                             class="w-full px-3.5 py-2 text-sm rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
                         @error('description') <span class="text-xs text-rose-600 mt-1 block">{{ $message }}</span> @enderror
                     </div>

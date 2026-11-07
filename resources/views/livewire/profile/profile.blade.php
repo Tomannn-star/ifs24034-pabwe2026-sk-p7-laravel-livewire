@@ -38,11 +38,11 @@
                 </div>
 
                 @if ($user->profile_photo_path)
-                    <button type="button" wire:click="confirmDeletePhoto" wire:loading.attr="disabled" class="w-full py-2 px-4 bg-rose-50 hover:bg-rose-100 text-rose-600 text-xs font-semibold rounded-lg border border-rose-200 transition flex items-center justify-center space-x-2 disabled:opacity-75">
-                        <svg wire:loading.remove wire:target="confirmDeletePhoto" class="w-4 h-4 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <button type="button" wire:click="confirmDeletePhoto" wire:loading.attr="disabled" class="w-full py-2 px-4 bg-rose-50 hover:bg-rose-100 text-rose-700 text-xs font-semibold rounded-lg border border-rose-200 transition flex items-center justify-center space-x-2 disabled:opacity-75">
+                        <svg wire:loading.remove wire:target="confirmDeletePhoto" class="w-4 h-4 text-rose-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                         </svg>
-                        <svg wire:loading wire:target="confirmDeletePhoto" class="animate-spin w-4 h-4 text-rose-600" fill="none" viewBox="0 0 24 24">
+                        <svg wire:loading wire:target="confirmDeletePhoto" class="animate-spin w-4 h-4 text-rose-700" fill="none" viewBox="0 0 24 24">
                             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                             <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
                         </svg>
@@ -51,7 +51,7 @@
                 @endif
             </div>
 
-            <p class="text-xs text-slate-400 mt-4">
+            <p class="text-xs text-slate-600 mt-4">
                 Mendukung PNG, JPG, GIF hingga 5MB. Foto otomatis dipotong menjadi rasio presisi 1:1.
             </p>
         </div>
@@ -64,22 +64,22 @@
 
                 <form wire:submit.prevent="updateProfileInformation" class="space-y-4">
                     <div>
-                        <label class="block text-sm font-medium text-slate-700 mb-1">Nama Lengkap</label>
-                        <input wire:model="name" type="text" class="w-full px-3.5 py-2 text-sm rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500" required>
-                        @error('name') <span class="text-xs text-rose-600 mt-1 block">{{ $message }}</span> @enderror
+                        <label for="profile-name" class="block text-sm font-medium text-slate-700 mb-1">Nama Lengkap</label>
+                        <input wire:model="name" type="text" id="profile-name" aria-label="Nama Lengkap" class="w-full px-3.5 py-2 text-sm rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                        @error('name') <span class="text-xs text-rose-700 mt-1 block">{{ $message }}</span> @enderror
                     </div>
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                            <label class="block text-sm font-medium text-slate-700 mb-1">Username</label>
-                            <input wire:model="username" type="text" class="w-full px-3.5 py-2 text-sm rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono" required>
-                            @error('username') <span class="text-xs text-rose-600 mt-1 block">{{ $message }}</span> @enderror
+                            <label for="profile-username" class="block text-sm font-medium text-slate-700 mb-1">Username</label>
+                            <input wire:model="username" type="text" id="profile-username" aria-label="Username" class="w-full px-3.5 py-2 text-sm rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono" required>
+                            @error('username') <span class="text-xs text-rose-700 mt-1 block">{{ $message }}</span> @enderror
                         </div>
 
                         <div>
-                            <label class="block text-sm font-medium text-slate-700 mb-1">Email</label>
-                            <input wire:model="email" type="email" class="w-full px-3.5 py-2 text-sm rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500" required>
-                            @error('email') <span class="text-xs text-rose-600 mt-1 block">{{ $message }}</span> @enderror
+                            <label for="profile-email" class="block text-sm font-medium text-slate-700 mb-1">Email</label>
+                            <input wire:model="email" type="email" id="profile-email" aria-label="Email" class="w-full px-3.5 py-2 text-sm rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                            @error('email') <span class="text-xs text-rose-700 mt-1 block">{{ $message }}</span> @enderror
                         </div>
                     </div>
 
@@ -102,21 +102,21 @@
 
                 <form wire:submit.prevent="updatePassword" class="space-y-4">
                     <div>
-                        <label class="block text-sm font-medium text-slate-700 mb-1">Password Saat Ini</label>
-                        <input wire:model="current_password" type="password" class="w-full px-3.5 py-2 text-sm rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Password saat ini" required>
-                        @error('current_password') <span class="text-xs text-rose-600 mt-1 block">{{ $message }}</span> @enderror
+                        <label for="current_password" class="block text-sm font-medium text-slate-700 mb-1">Password Saat Ini</label>
+                        <input wire:model="current_password" type="password" id="current_password" aria-label="Password Saat Ini" class="w-full px-3.5 py-2 text-sm rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Password saat ini" required>
+                        @error('current_password') <span class="text-xs text-rose-700 mt-1 block">{{ $message }}</span> @enderror
                     </div>
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                            <label class="block text-sm font-medium text-slate-700 mb-1">Password Baru</label>
-                            <input wire:model="password" type="password" class="w-full px-3.5 py-2 text-sm rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Minimal 8 karakter" required>
-                            @error('password') <span class="text-xs text-rose-600 mt-1 block">{{ $message }}</span> @enderror
+                            <label for="new_password" class="block text-sm font-medium text-slate-700 mb-1">Password Baru</label>
+                            <input wire:model="password" type="password" id="new_password" aria-label="Password Baru" class="w-full px-3.5 py-2 text-sm rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Minimal 8 karakter" required>
+                            @error('password') <span class="text-xs text-rose-700 mt-1 block">{{ $message }}</span> @enderror
                         </div>
 
                         <div>
-                            <label class="block text-sm font-medium text-slate-700 mb-1">Konfirmasi Password Baru</label>
-                            <input wire:model="password_confirmation" type="password" class="w-full px-3.5 py-2 text-sm rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Ulangi password baru" required>
+                            <label for="password_confirmation" class="block text-sm font-medium text-slate-700 mb-1">Konfirmasi Password Baru</label>
+                            <input wire:model="password_confirmation" type="password" id="password_confirmation" aria-label="Konfirmasi Password Baru" class="w-full px-3.5 py-2 text-sm rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Ulangi password baru" required>
                         </div>
                     </div>
 

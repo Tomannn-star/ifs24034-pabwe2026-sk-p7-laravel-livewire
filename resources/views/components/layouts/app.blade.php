@@ -3,9 +3,10 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Aplikasi Manajemen Inventaris dan Stok Barang Praktikum Pemrograman Aplikasi Berbasis Web dan Mobile 2026.">
     <title>{{ $title ?? 'Stock Barang' }} - PABWE 2026</title>
     <link rel="icon" type="image/svg+xml" href="{{ asset('favicon.svg') }}">
-    <script src="https://cdn.tailwindcss.com"></script>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
         [x-cloak] { display: none !important; }
         html:has(.modal-scroll-lock),
@@ -55,17 +56,17 @@
                     @if (auth()->user()->profile_photo_path && \Illuminate\Support\Facades\Storage::disk('public')->exists(auth()->user()->profile_photo_path))
                         <img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url(auth()->user()->profile_photo_path) }}" alt="{{ auth()->user()->name }}" class="w-10 h-10 rounded-full object-cover shadow-sm flex-shrink-0 border border-slate-200">
                     @else
-                        <div class="w-10 h-10 rounded-full {{ auth()->user()->isAdmin() ? 'bg-purple-600 text-purple-100' : 'bg-blue-600 text-blue-100' }} flex items-center justify-center font-bold text-sm shadow-sm flex-shrink-0">
+                        <div class="w-10 h-10 rounded-full {{ auth()->user()->isAdmin() ? 'bg-purple-600 text-white' : 'bg-blue-600 text-white' }} flex items-center justify-center font-bold text-sm shadow-sm flex-shrink-0">
                             {{ strtoupper(substr(auth()->user()->name, 0, 2)) }}
                         </div>
                     @endif
                     <div class="flex-1 min-w-0">
                         <p class="text-sm font-semibold text-slate-900 truncate">{{ auth()->user()->name }}</p>
-                        <p class="text-xs text-slate-500 font-mono truncate">&#64;{{ auth()->user()->username }}</p>
+                        <p class="text-xs text-slate-600 font-mono truncate">&#64;{{ auth()->user()->username }}</p>
                     </div>
                 </div>
                 <div class="mt-2.5 pt-2 border-t border-slate-200 flex items-center justify-between">
-                    <span class="text-xs text-slate-500">Peran Akun:</span>
+                    <span class="text-xs text-slate-600">Peran Akun:</span>
                     <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold {{ auth()->user()->isAdmin() ? 'bg-purple-100 text-purple-800 border border-purple-200' : 'bg-emerald-100 text-emerald-800 border border-emerald-200' }}">
                         {{ ucfirst(auth()->user()->role) }}
                     </span>
@@ -74,7 +75,7 @@
 
             <!-- Navigation Links -->
             <div class="flex-1 px-3 space-y-1 overflow-y-auto">
-                <div class="px-3 py-1.5 text-xs font-semibold uppercase tracking-wider text-slate-400">
+                <div class="px-3 py-1.5 text-xs font-semibold uppercase tracking-wider text-slate-600">
                     Menu Utama
                 </div>
 
@@ -109,8 +110,8 @@
             <div class="p-3 border-t border-slate-200">
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
-                    <button type="submit" class="w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-sm font-medium text-rose-600 hover:bg-rose-50 hover:text-rose-700 transition">
-                        <svg class="w-5 h-5 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <button type="submit" class="w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-sm font-medium text-rose-700 hover:bg-rose-50 hover:text-rose-800 transition">
+                        <svg class="w-5 h-5 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                         </svg>
                         <span>Keluar (Logout)</span>

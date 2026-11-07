@@ -113,14 +113,18 @@ $request = Request::capture();
 $kernel = $app->make(\Illuminate\Contracts\Http\Kernel::class);
 $response = $kernel->handle($request);
 
-if ($request->isMethod('GET') && $response->headers->has('Cache-Control')) {
-    $cc = (string) $response->headers->get('Cache-Control');
-    if (str_contains($cc, 'no-store')) {
-        $cc = preg_replace('/,?\s*no-store\s*,?/', ', ', $cc);
-        $cc = trim($cc, ', ');
-        $response->headers->set('Cache-Control', $cc);
-    }
+if ($request->isMethod('GET')) {
+    $response->headers->remove('Pragma');
+    $response->headers->remove('Expires');
+    $response->headers->set('Cache-Control', 'no-cache, must-revalidate, max-age=0, private');
 }
 
 $response->send();
+
+if ($request->isMethod('GET')) {
+    @header_remove('Pragma');
+    @header_remove('Expires');
+    @header('Cache-Control: no-cache, must-revalidate, max-age=0, private', true);
+}
+
 $kernel->terminate($request, $response);

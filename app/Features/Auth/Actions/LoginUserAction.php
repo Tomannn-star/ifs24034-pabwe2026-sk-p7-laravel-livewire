@@ -32,13 +32,6 @@ class LoginUserAction
             return true;
         }
 
-        // Fallback to standard Auth::attempt
-        $field = $isEmail ? 'email' : 'username';
-        if (Auth::attempt([$field => $login, 'password' => $password], $remember)) {
-            session()->regenerate();
-            return true;
-        }
-
         return false;
     }
 }
